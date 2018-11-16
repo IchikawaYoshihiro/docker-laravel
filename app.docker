@@ -24,20 +24,23 @@ RUN apt-get update && apt-get install -y mysql-client \
     sed -i 's/user\ \=\ www-data/user\ \=\ ichikawa/g' /usr/local/etc/php-fpm.d/www.conf && \
     sed -i 's/group\ \=\ www-data/group\ \=\ ichikawa/g' /usr/local/etc/php-fpm.d/www.conf && \
 
+RUN
     # Laravelインストール
+    cd /var/www && \
     chown -R ichikawa:ichikawa /var/www && \
     su ichikawa && \
     composer create-project --prefer-dist laravel/laravel laravel && \
 
     #/var/www以下のディレクトリとファイルのアクセス権を変更
     find /var/www -type d -exec chmod 770 {} \; && \
-    find /var/www -type f -exec chmod 770 {} \;
+    find /var/www -type f -exec chmod 770 {} \; && \
 
     # DB設定の変更
-    #sed -i 's/DB_DATABASE=homestead/DB_DATABASE=laraveltest/' /var/www/laravel/.env && \
-    #sed -i 's/DB_USERNAME=homestead/DB_USERNAME=root/' /var/www/laravel/.env && \
-    #sed -i 's/DB_PASSWORD=secret/DB_PASSWORD=secret/' /var/www/laravel/.env && \
-    #sed -i 's/DB_HOST=127.0.0.1/DB_HOST=docker-laravel_mysql_1/' /var/www/laravel/.env
-    #sed -i 's/DB_PORT=3306/DB_PORT=33060/' /var/www/laravel/.env
+    sed -i 's/DB_DATABASE=homestead/DB_DATABASE=laraveltest/' /var/www/laravel/.env && \
+    sed -i 's/DB_USERNAME=homestead/DB_USERNAME=root/' /var/www/laravel/.env && \
+    sed -i 's/DB_PASSWORD=secret/DB_PASSWORD=secret/' /var/www/laravel/.env && \
+    sed -i 's/DB_HOST=127.0.0.1/DB_HOST=db/' /var/www/laravel/.env && \
+    sed -i 's/DB_PORT=3306/DB_PORT=33060/' /var/www/laravel/.env && \
+    ls -la /var/www/laravel
 
 WORKDIR /var/www
