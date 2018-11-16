@@ -4,6 +4,7 @@ services:
         build:
             context: ./
             dockerfile: web.docker
+        container_name: my_web
         volumes:
             - ./www:/var/www
         ports:
@@ -14,17 +15,19 @@ services:
         build:
             context: ./
             dockerfile: app.docker
+        container_name: my_app
         volumes:
             - ./www:/var/www
         links:
-            - mysql
+            - mysql:hoge
     mysql:
         restart: always
-        image: mysql:latest
+        image: mysql:5 # 8系だと認証方式が変更されているので注意
+        container_name: my_db
         volumes:
             - ./mysql:/var/lib/mysql
         environment:
             - "MYSQL_ROOT_PASSWORD=secret"
             - "MYSQL_DATABASE=laraveltest"
         ports:
-            - "3306:3306"
+            - "33060:33060"
