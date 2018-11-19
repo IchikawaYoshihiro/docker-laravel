@@ -14,6 +14,7 @@ services:
         build:
             context: ./
             dockerfile: app.docker
+        env_file: env/.env.development
         volumes:
             - ./www:/var/www/laravel
         links:
@@ -27,4 +28,4 @@ services:
             - "MYSQL_ROOT_PASSWORD=secret"
             - "MYSQL_DATABASE=laraveltest"
         ports:
-            - "33060:33060"
+            - "33060:3306"

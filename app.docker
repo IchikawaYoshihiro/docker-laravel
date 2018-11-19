@@ -1,6 +1,8 @@
 # アプリケーションサーバー構築用
 FROM php:7-fpm
 
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
 RUN apt-get update && apt-get install -y mysql-client \
     && docker-php-ext-install pdo_mysql && \
 
@@ -24,11 +26,13 @@ RUN apt-get update && apt-get install -y mysql-client \
     sed -i 's/user\ \=\ www-data/user\ \=\ ichikawa/g' /usr/local/etc/php-fpm.d/www.conf && \
     sed -i 's/group\ \=\ www-data/group\ \=\ ichikawa/g' /usr/local/etc/php-fpm.d/www.conf
 
-    # vendorをインストール
-    COPY www/composer.lock /var/www/laravel/composer.json
-    COPY www/composer.lock /var/www/laravel/composer.lock
-    COPY env/.env.development /var/www/laravel/.env
+# vendorをインストール
+COPY www/composer.lock /var/www/laravel/composer.json
+COPY www/composer.lock /var/www/laravel/composer.lock
 
-    WORKDIR /var/www/laravel
+WORKDIR /var/www/laravel
 
-    RUN composer install
+RUN composer install && \
+    composer dump-autoload && \
+    ls vendor
+
