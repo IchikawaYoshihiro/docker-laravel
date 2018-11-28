@@ -14,7 +14,7 @@ services:
             dockerfile: app.docker
         env_file: env/.env.development
         volumes:
-            - ./src:/var/www/laravel
+            - ./src:/var/www
         links:
             - mysql:db
     mysql:
