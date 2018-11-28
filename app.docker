@@ -20,19 +20,12 @@ RUN apt-get update && apt-get install -y mysql-client \
     mv composer.phar /usr/local/bin/composer && \
 
     # user追加
-    useradd -m -s /bin/bash -u 1000 ichikawa && \
+    useradd -m -s /bin/bash -u 1000 app_user && \
 
     # www.conf修正
-    sed -i 's/user\ \=\ www-data/user\ \=\ ichikawa/g' /usr/local/etc/php-fpm.d/www.conf && \
-    sed -i 's/group\ \=\ www-data/group\ \=\ ichikawa/g' /usr/local/etc/php-fpm.d/www.conf
-
-# vendorをインストール
-COPY www/composer.lock /var/www/laravel/composer.json
-COPY www/composer.lock /var/www/laravel/composer.lock
+    sed -i 's/user\ \=\ www-data/user\ \=\ app_user/g' /usr/local/etc/php-fpm.d/www.conf && \
+    sed -i 's/group\ \=\ www-data/group\ \=\ app_user/g' /usr/local/etc/php-fpm.d/www.conf
 
 WORKDIR /var/www/laravel
 
-RUN composer install && \
-    composer dump-autoload && \
-    ls vendor
 
