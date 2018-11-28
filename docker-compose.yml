@@ -4,8 +4,6 @@ services:
         build:
             context: ./
             dockerfile: web.docker
-        volumes:
-            - ./www:/var/www
         ports:
             - "8000:80"
         links:
@@ -16,7 +14,7 @@ services:
             dockerfile: app.docker
         env_file: env/.env.development
         volumes:
-            - ./www:/var/www/laravel
+            - ./src:/var/www/laravel
         links:
             - mysql:db
     mysql:
