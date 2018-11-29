@@ -17,6 +17,7 @@ services:
             - ./src:/var/www
         links:
             - mysql:db
+            - redis:redis
     mysql:
         restart: always
         image: mysql:5 # 8系だと認証方式が変更されているので注意
