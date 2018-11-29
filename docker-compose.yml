@@ -27,3 +27,11 @@ services:
             - "MYSQL_DATABASE=laraveltest"
         ports:
             - "33060:3306"
+    redis:
+        restart: always
+        image: redis:latest
+        volumes:
+            - ./redis:/data
+        ports:
+            - "6379:6379"
+        command: redis-server --appendonly yes
