@@ -1,3 +1,5 @@
 mysql/*
-src/*
+app/*
 redis/*
+
+.vscode/*
