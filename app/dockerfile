@@ -1,0 +1,18 @@
+# アプリケーションサーバー構築用
+FROM php:7-fpm
+
+ENV COMPOSER_ALLOW_SUPERUSER 1
+
+ADD ./src /var/www/laravel
+
+RUN apt-get update && apt-get install -y mysql-client \
+  && docker-php-ext-install pdo_mysql opcache && \
+  # zip,unzip
+  apt-get install -y zip unzip && \
+  # composer
+  curl -sS https://getcomposer.org/installer | php && \
+  mv composer.phar /usr/local/bin/composer
+
+WORKDIR /var/www/laravel
+
+

@@ -1,5 +1,5 @@
 docker-compose up -d
 
-composer create-project --prefer-dist laravel/laravel src/laravel
-cd src/laravel
+composer create-project --prefer-dist laravel/laravel app/src
+cd app/src
 composer require predis/predis
